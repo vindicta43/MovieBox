@@ -3,7 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/forei/Desktop/MovieBox/app/src/main/res/layout/activity_main.xml" value="0.19166666666666668" />
+        <entry key="..\:/Users/forei/Desktop/MovieBox/app/src/main/res/layout/activity_onboarding.xml" value="0.19166666666666668" />
         <entry key="..\:/Users/forei/Desktop/MovieBox/app/src/main/res/layout/activity_splash.xml" value="0.19166666666666668" />
+        <entry key="..\:/Users/forei/Desktop/MovieBox/app/src/main/res/layout/fragment_first.xml" value="0.19166666666666668" />
+        <entry key="..\:/Users/forei/Desktop/MovieBox/app/src/main/res/layout/fragment_login.xml" value="0.17760416666666667" />
+        <entry key="..\:/Users/forei/Desktop/MovieBox/app/src/main/res/layout/fragment_onboard_first.xml" value="0.17760416666666667" />
+        <entry key="..\:/Users/forei/Desktop/MovieBox/app/src/main/res/layout/fragment_onboarding.xml" value="0.18" />
+        <entry key="..\:/Users/forei/Desktop/MovieBox/app/src/main/res/layout/fragment_page3.xml" value="0.1403985507246377" />
+        <entry key="..\:/Users/forei/Desktop/MovieBox/app/src/main/res/layout/fragment_second.xml" value="0.19166666666666668" />
+        <entry key="..\:/Users/forei/Desktop/MovieBox/app/src/main/res/layout/fragment_splash.xml" value="0.19166666666666668" />
+        <entry key="..\:/Users/forei/Desktop/MovieBox/app/src/main/res/layout/fragment_third.xml" value="0.19166666666666668" />
       </map>
     </option>
   </component>
