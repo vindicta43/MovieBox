@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "27267519803",
+    "project_id": "movie-box-80623",
+    "storage_bucket": "movie-box-80623.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:27267519803:android:baef98cff2f95eb2c0d31e",
+        "android_client_info": {
+          "package_name": "com.alperen.moviebox"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "27267519803-de0141gp03k242nbjch0adkfi1l4fi93.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alperen.moviebox",
+            "certificate_hash": "299095d3d34132420bcc7f450668a64b4412bd76"
+          }
+        },
+        {
+          "client_id": "27267519803-j1kioj03d3u3o0rsena4ebvus95i6b3r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYxLG-diS3UYXTrv3NjeaS1PrYzN6Rwok"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "27267519803-j1kioj03d3u3o0rsena4ebvus95i6b3r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
