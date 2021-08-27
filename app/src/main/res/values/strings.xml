@@ -19,6 +19,7 @@
     <string name="register_password">Parola</string>
     <string name="register_password_apply">Parolayı onayla</string>
     <string name="register_register_button">Kayıt ol</string>
+    <string name="profile_logout">Çıkış yap</string>
 
     <!-- Alert dialog strings -->
     <string name="alert_dialog_warn">Uyarı</string>
@@ -29,4 +30,8 @@
     <string name="alert_dialog_reset_mail_success">Sıfırlama maili başarıyla gönderildi. Lütfen emailinizi kontrol ediniz.</string>
     <string name="alert_dialog_empty_space">Lütfen boş alanları doldurunuz.</string>
     <string name="alert_dialog_password_doesnt_match">Parolalar eşleşmiyor.</string>
+
+    <!-- Bottom Navigation View strings -->
+    <string name="menu_main_page">Ana Sayfa</string>
+    <string name="menu_profile">Profil</string>
 </resources>

@@ -8,9 +8,7 @@ import com.alperen.moviebox.models.ModelUser
 import com.alperen.moviebox.utils.AlertBuilder
 import com.alperen.moviebox.utils.ToastBuilder
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 
 object FirebaseUserUtils {
     fun sendResetEmail(context: Context?, email: Editable?) {
@@ -54,6 +52,24 @@ object FirebaseUserUtils {
                         AlertBuilder(context).build(err, it.message.toString())
                         result.value = "Fail"
                     }
+            }.addOnFailureListener {
+                AlertBuilder(context).build(err, it.message.toString())
+                result.value = "Fail"
+            }
+        return result
+    }
+
+    fun login(context: Context?, email: String, password: String): MutableLiveData<String> {
+        val msg = context?.resources?.getString(R.string.alert_dialog_success)
+        val err = context?.resources?.getString(R.string.alert_dialog_error)
+        val result = MutableLiveData("Processing")
+
+        FirebaseAuth
+            .getInstance()
+            .signInWithEmailAndPassword(email, password)
+            .addOnSuccessListener {
+                ToastBuilder(context).build(msg)
+                result.value = "Success"
             }.addOnFailureListener {
                 AlertBuilder(context).build(err, it.message.toString())
                 result.value = "Fail"

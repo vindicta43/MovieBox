@@ -2,6 +2,7 @@ package com.alperen.moviebox.viewmodels
 
 import android.content.Context
 import android.text.Editable
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import com.alperen.moviebox.R
 import com.alperen.moviebox.network.FirebaseUserUtils
@@ -17,5 +18,13 @@ class LoginViewModel(state: SavedStateHandle): MainViewModel(state) {
         } else {
             FirebaseUserUtils.sendResetEmail(context, email)
         }
+    }
+
+    fun login(context: Context?, email: String, password: String): MutableLiveData<String> {
+        val result = MutableLiveData("Processing")
+        FirebaseUserUtils.login(context, email, password).observeForever { observer ->
+            result.value = observer
+        }
+        return result
     }
 }

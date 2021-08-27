@@ -31,32 +31,41 @@ open class RegisterFragment : Fragment() {
 
         with(binding) {
             btnRegister.setOnClickListener {
-                val name = etName.text.toString()
-                val surname = etSurname.text.toString()
-                val email = etEmail.text.toString()
-                val password = etPassword.text.toString()
-                val passwordApply = etPasswordApply.text.toString()
+                val name = etName.text
+                val surname = etSurname.text
+                val email = etEmail.text
+                val password = etPassword.text
+                val passwordApply = etPasswordApply.text
 
                 val err = resources.getString(R.string.alert_dialog_error)
                 val msgEmpty = resources.getString(R.string.alert_dialog_empty_space)
                 val msgNotEqual = resources.getString(R.string.alert_dialog_password_doesnt_match)
 
-                if (name.isBlank() &&
-                    surname.isBlank() &&
-                    email.isBlank() &&
-                    password.isBlank() &&
-                    passwordApply.isBlank()
+                if (name.isNullOrEmpty() &&
+                    surname.isNullOrEmpty() &&
+                    email.isNullOrEmpty() &&
+                    password.isNullOrEmpty() &&
+                    passwordApply.isNullOrEmpty()
                 ) {
                     AlertBuilder(context).build(err, msgEmpty)
                 } else {
                     if (password != passwordApply) {
                         AlertBuilder(context).build(err, msgNotEqual)
                     } else {
-                        viewModel.register(context, name, surname, email, password)
+                        viewModel.register(
+                            context,
+                            name.toString(),
+                            surname.toString(),
+                            email.toString(),
+                            password.toString()
+                        )
                             .observe(viewLifecycleOwner, { result ->
-                                when(result) {
+                                when (result) {
                                     "Processing" -> {
-                                        loadingDialog.show(activity?.supportFragmentManager!!, "loader")
+                                        loadingDialog.show(
+                                            activity?.supportFragmentManager!!,
+                                            "loader"
+                                        )
                                     }
                                     "Success" -> {
                                         loadingDialog.dismissAllowingStateLoss()

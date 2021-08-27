@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.alperen.moviebox.R
 import com.alperen.moviebox.databinding.FragmentSplashBinding
 import com.alperen.moviebox.viewmodels.MainViewModel
+import com.google.firebase.auth.FirebaseAuth
 
 class SplashFragment : Fragment() {
     private lateinit var binding: FragmentSplashBinding
@@ -34,7 +35,11 @@ class SplashFragment : Fragment() {
                 }
 
                 override fun onAnimationEnd(p0: Animator?) {
-                    initApp()
+                    if (isAlreadyLoggedIn()) {
+                        findNavController().navigate(R.id.action_splashFragment_to_mainActivity)
+                    } else {
+                        initApp()
+                    }
                 }
 
                 override fun onAnimationCancel(p0: Animator?) {
@@ -46,6 +51,11 @@ class SplashFragment : Fragment() {
 
             return root
         }
+    }
+
+    fun isAlreadyLoggedIn(): Boolean {
+        val auth = FirebaseAuth.getInstance()
+        return auth.currentUser != null
     }
 
     private fun initApp() {
