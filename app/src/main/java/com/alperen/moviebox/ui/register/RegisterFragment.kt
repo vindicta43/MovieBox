@@ -12,11 +12,13 @@ import androidx.navigation.fragment.findNavController
 import com.alperen.moviebox.R
 import com.alperen.moviebox.databinding.FragmentRegisterBinding
 import com.alperen.moviebox.utils.AlertBuilder
+import com.alperen.moviebox.utils.LoadingDialog
 import com.alperen.moviebox.viewmodels.RegisterViewModel
 
 open class RegisterFragment : Fragment() {
     private lateinit var binding: FragmentRegisterBinding
     private lateinit var viewModel: RegisterViewModel
+    private val loadingDialog by lazy { LoadingDialog() }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,7 +52,21 @@ open class RegisterFragment : Fragment() {
                     if (password != passwordApply) {
                         AlertBuilder(context).build(err, msgNotEqual)
                     } else {
-                        viewModel.register(context, findNavController(), email, password)
+                        viewModel.register(context, name, surname, email, password)
+                            .observe(viewLifecycleOwner, { result ->
+                                when(result) {
+                                    "Processing" -> {
+                                        loadingDialog.show(activity?.supportFragmentManager!!, "loader")
+                                    }
+                                    "Success" -> {
+                                        loadingDialog.dismissAllowingStateLoss()
+                                        findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+                                    }
+                                    "Fail" -> {
+                                        loadingDialog.dismissAllowingStateLoss()
+                                    }
+                                }
+                            })
                     }
                 }
             }
@@ -58,5 +74,4 @@ open class RegisterFragment : Fragment() {
             return root
         }
     }
-
 }
