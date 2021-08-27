@@ -27,4 +27,6 @@
     <string name="alert_dialog_okay">Tamam</string>
     <string name="alert_dialog_empty_email">Lütfen şifresini unuttuğunuz emaili yukarıdaki email alanına giriniz.</string>
     <string name="alert_dialog_reset_mail_success">Sıfırlama maili başarıyla gönderildi. Lütfen emailinizi kontrol ediniz.</string>
+    <string name="alert_dialog_empty_space">Lütfen boş alanları doldurunuz.</string>
+    <string name="alert_dialog_password_doesnt_match">Parolalar eşleşmiyor.</string>
 </resources>

@@ -3,26 +3,33 @@ package com.alperen.moviebox.ui.splash
 import android.animation.Animator
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.SavedStateViewModelFactory
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.airbnb.lottie.animation.content.Content
 import com.alperen.moviebox.R
 import com.alperen.moviebox.databinding.FragmentSplashBinding
+import com.alperen.moviebox.viewmodels.MainViewModel
 
 class SplashFragment : Fragment() {
     private lateinit var binding: FragmentSplashBinding
+    private lateinit var viewModel: MainViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_splash, container, false)
+        viewModel =
+            ViewModelProvider(this, SavedStateViewModelFactory(activity?.application, this)).get(
+                MainViewModel::class.java
+            )
 
         with(binding) {
-            splash.addAnimatorListener(object: Animator.AnimatorListener{
+            splash.addAnimatorListener(object : Animator.AnimatorListener {
                 override fun onAnimationStart(p0: Animator?) {
                 }
 
@@ -52,5 +59,12 @@ class SplashFragment : Fragment() {
     private fun onboardingShowed(): Boolean {
         val sharedPref = activity?.getSharedPreferences("", Context.MODE_PRIVATE)
         return sharedPref?.getBoolean("Finished", false)!!
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        if (::viewModel.isInitialized)
+            viewModel.saveState()
+
+        super.onSaveInstanceState(outState)
     }
 }
