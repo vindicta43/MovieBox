@@ -28,8 +28,10 @@ class SplashFragment : Fragment() {
             ViewModelProvider(this, SavedStateViewModelFactory(activity?.application, this)).get(
                 MainViewModel::class.java
             )
-
         with(binding) {
+            if (isAppStarted())
+                findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
+
             splash.addAnimatorListener(object : Animator.AnimatorListener {
                 override fun onAnimationStart(p0: Animator?) {
                 }
@@ -37,6 +39,7 @@ class SplashFragment : Fragment() {
                 override fun onAnimationEnd(p0: Animator?) {
                     if (isAlreadyLoggedIn()) {
                         findNavController().navigate(R.id.action_splashFragment_to_mainActivity)
+                        makeAppStarted()
                     } else {
                         initApp()
                     }
@@ -69,6 +72,18 @@ class SplashFragment : Fragment() {
     private fun onboardingShowed(): Boolean {
         val sharedPref = activity?.getSharedPreferences("", Context.MODE_PRIVATE)
         return sharedPref?.getBoolean("Finished", false)!!
+    }
+
+    private fun makeAppStarted() {
+        val sharedPref = activity?.getSharedPreferences("", Context.MODE_PRIVATE)
+        val editor = sharedPref?.edit()
+        editor?.putBoolean("isAppStarted", true)
+        editor?.apply()
+    }
+
+    private fun isAppStarted(): Boolean {
+        val sharedPref = activity?.getSharedPreferences("", Context.MODE_PRIVATE)
+        return sharedPref?.getBoolean("isAppStarted", false)!!
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

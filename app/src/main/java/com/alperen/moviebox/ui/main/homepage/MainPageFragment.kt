@@ -1,4 +1,4 @@
-package com.alperen.moviebox.ui.main
+package com.alperen.moviebox.ui.main.homepage
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

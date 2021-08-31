@@ -8,14 +8,13 @@ import com.alperen.moviebox.network.FirebaseUserUtils
 
 class RegisterViewModel(state: SavedStateHandle) : MainViewModel(state) {
     fun register(
-        context: Context?,
         name: String,
         surname: String,
         email: String,
         password: String
-    ): MutableLiveData<String> {
-        val result = MutableLiveData("Processing")
-        FirebaseUserUtils.register(context, name, surname, email, password)
+    ): MutableLiveData<Map<String, String>> {
+        val result = MutableLiveData<Map<String, String>>()
+        FirebaseUserUtils.register(name, surname, email, password)
             .observeForever { observer ->
                 result.value = observer
             }

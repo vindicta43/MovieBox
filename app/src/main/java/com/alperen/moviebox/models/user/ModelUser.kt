@@ -1,4 +1,4 @@
-package com.alperen.moviebox.models
+package com.alperen.moviebox.models.user
 
 data class ModelUser(
     val id: String,

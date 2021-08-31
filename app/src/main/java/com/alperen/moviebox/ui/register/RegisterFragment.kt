@@ -12,7 +12,9 @@ import androidx.navigation.fragment.findNavController
 import com.alperen.moviebox.R
 import com.alperen.moviebox.databinding.FragmentRegisterBinding
 import com.alperen.moviebox.utils.AlertBuilder
+import com.alperen.moviebox.utils.Constants
 import com.alperen.moviebox.utils.LoadingDialog
+import com.alperen.moviebox.utils.ToastBuilder
 import com.alperen.moviebox.viewmodels.RegisterViewModel
 
 open class RegisterFragment : Fragment() {
@@ -49,38 +51,45 @@ open class RegisterFragment : Fragment() {
                 ) {
                     AlertBuilder(context).build(err, msgEmpty)
                 } else {
-                    if (password != passwordApply) {
+                    if (password?.equals(passwordApply)!!) {
                         AlertBuilder(context).build(err, msgNotEqual)
                     } else {
                         viewModel.register(
-                            context,
                             name.toString(),
                             surname.toString(),
                             email.toString(),
                             password.toString()
                         )
                             .observe(viewLifecycleOwner, { result ->
-                                when (result) {
-                                    "Processing" -> {
-                                        loadingDialog.show(
-                                            activity?.supportFragmentManager!!,
-                                            "loader"
-                                        )
-                                    }
-                                    "Success" -> {
-                                        loadingDialog.dismissAllowingStateLoss()
-                                        findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
-                                    }
-                                    "Fail" -> {
-                                        loadingDialog.dismissAllowingStateLoss()
-                                    }
-                                }
+                                observeResult(result)
                             })
                     }
                 }
             }
 
             return root
+        }
+    }
+
+    private fun observeResult(result: Map<String, String>) {
+        val msg = resources.getString(R.string.alert_dialog_success)
+        val title = resources.getString(R.string.alert_dialog_error)
+
+        if (result.containsKey(Constants.PROCESSING)) {
+            loadingDialog.show(
+                activity?.supportFragmentManager!!,
+                "loader"
+            )
+        }
+        if (result.containsKey(Constants.SUCCESS)) {
+            loadingDialog.dismissAllowingStateLoss()
+            ToastBuilder(context).build(msg)
+            findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+
+        }
+        if (result.containsKey(Constants.FAILED)) {
+            loadingDialog.dismissAllowingStateLoss()
+            AlertBuilder(context).build(title, result[Constants.FAILED])
         }
     }
 }

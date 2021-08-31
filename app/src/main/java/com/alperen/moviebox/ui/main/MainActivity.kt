@@ -1,5 +1,6 @@
 package com.alperen.moviebox.ui.main
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.findNavController
@@ -18,5 +19,17 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
         menu.setupWithNavController(navController)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        makeAppStopped()
+    }
+
+    private fun makeAppStopped() {
+        val sharedPref = this.getSharedPreferences("", Context.MODE_PRIVATE)
+        val editor = sharedPref?.edit()
+        editor?.putBoolean("isAppStarted", false)
+        editor?.apply()
     }
 }

@@ -8,21 +8,18 @@ import com.alperen.moviebox.R
 import com.alperen.moviebox.network.FirebaseUserUtils
 import com.alperen.moviebox.utils.AlertBuilder
 
-class LoginViewModel(state: SavedStateHandle): MainViewModel(state) {
-    fun sendResetMail(context: Context?, email: Editable?) {
-        if (email.isNullOrBlank()) {
-            val title = context?.resources?.getString(R.string.alert_dialog_warn)
-            val msg = context?.resources?.getString(R.string.alert_dialog_empty_email)
-
-            AlertBuilder(context).build(title, msg)
-        } else {
-            FirebaseUserUtils.sendResetEmail(context, email)
+class LoginViewModel(state: SavedStateHandle) : MainViewModel(state) {
+    fun sendResetMail(email: String): MutableLiveData<Map<String, String>> {
+        val result = MutableLiveData<Map<String, String>>()
+        FirebaseUserUtils.sendResetEmail(email).observeForever { observer ->
+            result.value = observer
         }
+        return result
     }
 
-    fun login(context: Context?, email: String, password: String): MutableLiveData<String> {
-        val result = MutableLiveData("Processing")
-        FirebaseUserUtils.login(context, email, password).observeForever { observer ->
+    fun login(email: String, password: String): MutableLiveData<Map<String, String>> {
+        val result = MutableLiveData<Map<String, String>>()
+        FirebaseUserUtils.login(email, password).observeForever { observer ->
             result.value = observer
         }
         return result

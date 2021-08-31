@@ -12,7 +12,6 @@ import com.alperen.moviebox.databinding.FragmentOnboardingBinding
 import com.alperen.moviebox.ui.onboard.pages.Page1Fragment
 import com.alperen.moviebox.ui.onboard.pages.Page2Fragment
 import com.alperen.moviebox.ui.onboard.pages.Page3Fragment
-import com.alperen.moviebox.utils.OnboardingViewPagerAdapter
 
 class OnboardingFragment : Fragment() {
     private lateinit var binding: FragmentOnboardingBinding

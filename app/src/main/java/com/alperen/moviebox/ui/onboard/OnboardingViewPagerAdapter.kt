@@ -1,4 +1,4 @@
-package com.alperen.moviebox.utils
+package com.alperen.moviebox.ui.onboard
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

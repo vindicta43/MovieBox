@@ -7,20 +7,21 @@
 
     <fragment
         android:id="@+id/mainPageFragment"
-        android:name="com.alperen.moviebox.ui.main.MainPageFragment"
+        android:name="com.alperen.moviebox.ui.main.homepage.MainPageFragment"
         android:label="fragment_main_page"
         tools:layout="@layout/fragment_main_page" />
     <fragment
         android:id="@+id/profilePageFragment"
-        android:name="com.alperen.moviebox.ui.main.ProfilePageFragment"
+        android:name="com.alperen.moviebox.ui.main.profile.ProfilePageFragment"
         android:label="fragment_profile_page"
         tools:layout="@layout/fragment_profile_page" >
         <action
-            android:id="@+id/action_profilePageFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            android:id="@+id/action_profilePageFragment_to_loginActivity"
+            app:destination="@id/loginActivity" />
     </fragment>
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.alperen.moviebox.ui.login.LoginFragment"
-        android:label="LoginFragment" />
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="com.alperen.moviebox.ui.login.LoginActivity"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" />
 </navigation>
