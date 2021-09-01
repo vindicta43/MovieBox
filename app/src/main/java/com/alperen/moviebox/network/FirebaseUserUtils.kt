@@ -101,16 +101,19 @@ object FirebaseUserUtils {
                             .addOnSuccessListener {
                                 dbRef.collection(Constants.COLLECTION_USERS)
                                     .document(user.uid)
-                                    .set(ModelUser(
-                                        user.uid,
-                                        name,
-                                        surname,
-                                        email
-                                    ))
+                                    .set(
+                                        ModelUser(
+                                            user.uid,
+                                            name,
+                                            surname,
+                                            email
+                                        )
+                                    )
                                     .addOnSuccessListener {
                                         result.value = mapOf(Constants.SUCCESS to Constants.SUCCESS)
                                     }.addOnFailureListener {
-                                        result.value = mapOf(Constants.FAILED to it.message.toString())
+                                        result.value =
+                                            mapOf(Constants.FAILED to it.message.toString())
                                     }
                             }.addOnFailureListener {
                                 result.value = mapOf(Constants.FAILED to it.message.toString())
@@ -141,12 +144,14 @@ object FirebaseUserUtils {
                     .addOnSuccessListener {
                         dbRef.collection(Constants.COLLECTION_USERS)
                             .document(user.uid)
-                            .set(ModelUser(
-                                user.uid,
-                                name,
-                                surname,
-                                email
-                            ))
+                            .set(
+                                ModelUser(
+                                    user.uid,
+                                    name,
+                                    surname,
+                                    email
+                                )
+                            )
                             .addOnSuccessListener {
                                 result.value = mapOf(Constants.SUCCESS to Constants.SUCCESS)
                             }.addOnFailureListener {

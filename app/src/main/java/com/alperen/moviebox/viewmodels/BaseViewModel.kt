@@ -7,7 +7,7 @@ import com.alperen.moviebox.models.user.ModelUser
 import com.alperen.moviebox.network.FirebaseUserUtils
 import kotlin.random.Random
 
-open class MainViewModel(private val state: SavedStateHandle): ViewModel() {
+open class BaseViewModel(private val state: SavedStateHandle): ViewModel() {
     private val liveDate = state.getLiveData("liveData", Random.nextInt().toString())
 
     fun saveState() {

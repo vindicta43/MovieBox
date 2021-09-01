@@ -13,12 +13,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.alperen.moviebox.R
 import com.alperen.moviebox.databinding.FragmentSplashBinding
-import com.alperen.moviebox.viewmodels.MainViewModel
+import com.alperen.moviebox.viewmodels.BaseViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 class SplashFragment : Fragment() {
     private lateinit var binding: FragmentSplashBinding
-    private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: BaseViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -26,7 +26,7 @@ class SplashFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_splash, container, false)
         viewModel =
             ViewModelProvider(this, SavedStateViewModelFactory(activity?.application, this)).get(
-                MainViewModel::class.java
+                BaseViewModel::class.java
             )
         with(binding) {
             if (isAppStarted())

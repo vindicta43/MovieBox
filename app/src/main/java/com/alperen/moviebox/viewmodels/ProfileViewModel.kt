@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import com.alperen.moviebox.network.FirebaseUserUtils
 
-class ProfileViewModel(state: SavedStateHandle): MainViewModel(state) {
+class ProfileViewModel(state: SavedStateHandle): BaseViewModel(state) {
     fun updateUser(
         name: String,
         surname: String,

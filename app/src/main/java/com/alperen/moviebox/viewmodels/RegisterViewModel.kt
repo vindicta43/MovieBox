@@ -1,12 +1,10 @@
 package com.alperen.moviebox.viewmodels
 
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
-import androidx.navigation.NavController
 import com.alperen.moviebox.network.FirebaseUserUtils
 
-class RegisterViewModel(state: SavedStateHandle) : MainViewModel(state) {
+class RegisterViewModel(state: SavedStateHandle) : BaseViewModel(state) {
     fun register(
         name: String,
         surname: String,
