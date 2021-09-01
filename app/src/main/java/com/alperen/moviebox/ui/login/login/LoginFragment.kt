@@ -71,6 +71,7 @@ class LoginFragment : Fragment() {
 
     private fun observeResetMailResult(result: Map<String, String>) {
         val title = resources.getString(R.string.alert_dialog_success)
+        val titleFail = resources.getString(R.string.alert_dialog_error)
         val msg = resources.getString(R.string.alert_dialog_reset_mail_success)
 
         if (result.containsKey(Constants.PROCESSING)) {
@@ -80,12 +81,12 @@ class LoginFragment : Fragment() {
             )
         }
         if (result.containsKey(Constants.SUCCESS)) {
-            AlertBuilder(context).build(title, msg)
             loadingDialog.dismissAllowingStateLoss()
+            AlertBuilder(context).build(title, msg)
         }
         if (result.containsKey(Constants.FAILED)) {
             loadingDialog.dismissAllowingStateLoss()
-            AlertBuilder(context).build(title, result[Constants.FAILED])
+            AlertBuilder(context).build(titleFail, result[Constants.FAILED])
         }
     }
 
@@ -100,8 +101,8 @@ class LoginFragment : Fragment() {
             )
         }
         if (result.containsKey(Constants.SUCCESS)) {
-            ToastBuilder(context).build(msg)
             loadingDialog.dismissAllowingStateLoss()
+            ToastBuilder(context).build(msg)
             findNavController().navigate(R.id.action_loginFragment_to_mainActivity)
             activity?.finish()
         }

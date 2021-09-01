@@ -32,6 +32,9 @@ class SplashFragment : Fragment() {
             if (isAppStarted())
                 findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
 
+
+            // findNavController().navigate(R.id.action_splashFragment_to_mainActivity)
+
             splash.addAnimatorListener(object : Animator.AnimatorListener {
                 override fun onAnimationStart(p0: Animator?) {
                 }
@@ -40,6 +43,7 @@ class SplashFragment : Fragment() {
                     if (isAlreadyLoggedIn()) {
                         findNavController().navigate(R.id.action_splashFragment_to_mainActivity)
                         makeAppStarted()
+                        activity?.finish()
                     } else {
                         initApp()
                     }

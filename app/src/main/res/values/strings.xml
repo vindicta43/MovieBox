@@ -5,6 +5,7 @@
     <string name="page2_title">Welcome to Movie Box2</string>
     <string name="page3_title">Welcome to Movie Box3</string>
     <string name="page3_skip">Geç</string>
+
     <string name="login_login_text">Giriş</string>
     <string name="login_email">Email</string>
     <string name="login_password">Parola</string>
@@ -12,14 +13,24 @@
     <string name="login_or_text">ya da</string>
     <string name="login_register_button">Kayıt ol</string>
     <string name="login_forgot_password">Şifremi unuttum?</string>
+
     <string name="register_register_text">Kayıt Ol</string>
     <string name="register_name">Ad</string>
     <string name="register_surname">Soyad</string>
     <string name="register_email">Email</string>
+    <string name="register_new_password">Yeni parola</string>
     <string name="register_password">Parola</string>
     <string name="register_password_apply">Parolayı onayla</string>
     <string name="register_register_button">Kayıt ol</string>
+
+    <string name="profile_profile_text">Profil</string>
+    <string name="profile_name">Ad</string>
+    <string name="profile_surname">Soyad</string>
+    <string name="profile_email">Email</string>
+    <string name="profile_password">Hesap parolası</string>
+    <string name="profile_new_password">Yeni parola</string>
     <string name="profile_logout">Çıkış yap</string>
+    <string name="profile_update">Güncelle</string>
 
     <!-- Alert dialog strings -->
     <string name="alert_dialog_warn">Uyarı</string>
@@ -29,6 +40,8 @@
     <string name="alert_dialog_empty_email">Lütfen şifresini unuttuğunuz emaili yukarıdaki email alanına giriniz.</string>
     <string name="alert_dialog_reset_mail_success">Sıfırlama maili başarıyla gönderildi. Lütfen emailinizi kontrol ediniz.</string>
     <string name="alert_dialog_empty_space">Lütfen boş alanları doldurunuz.</string>
+    <string name="alert_dialog_update_empty_space">Lütfen boş alanları hesap parolası ile birlikte doldurunuz.</string>
+    <string name="alert_dialog_update_profile_success">Bilgileriniz başarıyla güncellendi.</string>
     <string name="alert_dialog_password_doesnt_match">Parolalar eşleşmiyor.</string>
 
     <!-- Bottom Navigation View strings -->
