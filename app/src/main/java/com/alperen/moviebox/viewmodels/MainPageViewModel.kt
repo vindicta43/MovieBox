@@ -12,9 +12,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MainPageViewModel(state: SavedStateHandle) : BaseViewModel(state) {
-//    var showList = MutableLiveData<ArrayList<ModelShow>>()
+    var showList = MutableLiveData<ArrayList<ModelShow>>()
 
-    var showList = arrayListOf<ModelShow>()
     fun getShows(): MutableLiveData<Map<String, Any>> {
         val result = MutableLiveData(mapOf(Constants.PROCESSING to Any()))
         val service = RetrofitInstance.getInstance().create(APIService::class.java)
@@ -28,7 +27,7 @@ class MainPageViewModel(state: SavedStateHandle) : BaseViewModel(state) {
                 if (response.isSuccessful) {
                     result.value = mapOf(Constants.SUCCESS to Constants.SUCCESS)
                     Log.e("retrofit", response.body().toString())
-                    showList = response.body()!!
+                    showList.value = response.body()!!
                 }
             }
 

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.alperen.moviebox.R
 import com.alperen.moviebox.databinding.FragmentMainPageBinding
 import com.alperen.moviebox.models.user.show.ModelShow
@@ -40,14 +41,18 @@ class MainPageFragment : Fragment() {
 
         with(binding) {
             viewModel.getShows().observe(viewLifecycleOwner, { observer ->
-                observeShowsResult(observer)
+                observeShowsResult(observer).observe(viewLifecycleOwner, { result ->
+                    mainRecycler.adapter = MainPageRecyclerAdapter(result)
+                    mainRecycler.layoutManager = LinearLayoutManager(context)
+                })
             })
             return root
         }
     }
 
-    private fun observeShowsResult(result: Map<String, Any>) {
+    private fun observeShowsResult(result: Map<String, Any>): MutableLiveData<ArrayList<ModelShow>> {
         val titleFail = resources.getString(R.string.alert_dialog_error)
+        val shows = MutableLiveData<ArrayList<ModelShow>>()
 
         if (result.containsKey(Constants.PROCESSING)) {
             loadingDialog.show(
@@ -56,11 +61,15 @@ class MainPageFragment : Fragment() {
             )
         }
         if (result.containsKey(Constants.SUCCESS)) {
-            loadingDialog.dismissAllowingStateLoss()
+             viewModel.showList.observe(viewLifecycleOwner, { observer ->
+                 loadingDialog.dismissAllowingStateLoss()
+                 shows.value = observer
+             })
         }
         if (result.containsKey(Constants.FAILED)) {
             loadingDialog.dismissAllowingStateLoss()
             AlertBuilder(context).build(titleFail, result[Constants.FAILED].toString())
         }
+        return shows
     }
 }
