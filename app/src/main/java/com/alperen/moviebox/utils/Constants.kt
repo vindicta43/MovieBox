@@ -16,6 +16,5 @@ class Constants {
         const val PROCESSING = "Processing"
         const val SUCCESS = "Success"
         const val FAILED = "Failed"
-        const val RESULT = "Result"
     }
 }

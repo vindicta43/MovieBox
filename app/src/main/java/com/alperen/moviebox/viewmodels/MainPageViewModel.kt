@@ -13,9 +13,9 @@ import retrofit2.Response
 
 class MainPageViewModel(state: SavedStateHandle) : BaseViewModel(state) {
     var showList = MutableLiveData<ArrayList<ModelShow>>()
+    var errorMsg = MutableLiveData<Any>()
 
-    fun getShows(): MutableLiveData<Map<String, Any>> {
-        val result = MutableLiveData(mapOf(Constants.PROCESSING to Any()))
+    fun getShows() {
         val service = RetrofitInstance.getInstance().create(APIService::class.java)
         val request = service.getShows()
 
@@ -25,17 +25,14 @@ class MainPageViewModel(state: SavedStateHandle) : BaseViewModel(state) {
                 response: Response<ArrayList<ModelShow>>
             ) {
                 if (response.isSuccessful) {
-                    result.value = mapOf(Constants.SUCCESS to Constants.SUCCESS)
                     Log.e("retrofit", response.body().toString())
                     showList.value = response.body()!!
                 }
             }
 
             override fun onFailure(call: Call<ArrayList<ModelShow>>, t: Throwable) {
-                result.value = mapOf(Constants.FAILED to t.message.toString())
+                errorMsg.value = t.message.toString()
             }
         })
-
-        return result
     }
 }

@@ -7,21 +7,32 @@
 
     <fragment
         android:id="@+id/mainPageFragment"
-        android:name="com.alperen.moviebox.ui.main.homepage.MainPageFragment"
+        android:name="com.alperen.moviebox.ui.main.homepage.HomePageFragment"
         android:label="fragment_main_page"
-        tools:layout="@layout/fragment_main_page" />
+        tools:layout="@layout/fragment_home_page">
+        <action
+            android:id="@+id/action_mainPageFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" >
+        </action>
+    </fragment>
     <fragment
         android:id="@+id/profilePageFragment"
         android:name="com.alperen.moviebox.ui.main.profile.ProfilePageFragment"
         android:label="fragment_profile_page"
-        tools:layout="@layout/fragment_profile_page" >
-        <action
-            android:id="@+id/action_profilePageFragment_to_loginActivity"
-            app:destination="@id/loginActivity" />
+        tools:layout="@layout/fragment_profile_page">
     </fragment>
     <activity
         android:id="@+id/loginActivity"
         android:name="com.alperen.moviebox.ui.login.LoginActivity"
         android:label="activity_login"
         tools:layout="@layout/activity_login" />
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.alperen.moviebox.ui.main.details.DetailsFragment"
+        android:label="fragment_details"
+        tools:layout="@layout/fragment_details">
+        <argument
+            android:name="show"
+            app:argType="com.alperen.moviebox.models.show.ModelDetails" />
+    </fragment>
 </navigation>

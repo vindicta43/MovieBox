@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class ModelShow(
 
 	@field:SerializedName("summary")
-	val summary: String? = null,
+    val summary: String? = null,
 
 	@field:SerializedName("image")
 	val image: Image? = null,

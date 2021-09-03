@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.alperen.moviebox.models.user.ModelUser
+import com.alperen.moviebox.models.user.show.ModelShow
 import com.alperen.moviebox.network.FirebaseUserUtils
 import kotlin.random.Random
 
