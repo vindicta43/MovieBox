@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import com.alperen.moviebox.models.user.show.ModelShow
+import com.alperen.moviebox.network.FirebaseUserUtils
 import com.alperen.moviebox.network.retrofitapi.APIService
 import com.alperen.moviebox.network.retrofitapi.RetrofitInstance
 import com.alperen.moviebox.utils.Constants
@@ -11,7 +12,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainPageViewModel(state: SavedStateHandle) : BaseViewModel(state) {
+class HomePageViewModel(state: SavedStateHandle) : BaseViewModel(state) {
     var showList = MutableLiveData<ArrayList<ModelShow>>()
     var errorMsg = MutableLiveData<Any>()
 

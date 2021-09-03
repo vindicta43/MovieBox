@@ -49,6 +49,8 @@
     <string name="alert_dialog_update_empty_space">Lütfen boş alanları hesap parolası ile birlikte doldurunuz.</string>
     <string name="alert_dialog_update_profile_success">Bilgileriniz başarıyla güncellendi.</string>
     <string name="alert_dialog_password_doesnt_match">Parolalar eşleşmiyor.</string>
+    <string name="alert_dialog_favorite_add_success">Başarıyla favorilere eklendi.</string>
+    <string name="alert_dialog_favorite_remove_success">Başarıyla favorilerden kaldırıldı.</string>
 
     <!-- Bottom Navigation View strings -->
     <string name="menu_main_page">Ana Sayfa</string>

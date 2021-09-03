@@ -14,11 +14,11 @@ import com.alperen.moviebox.databinding.FragmentHomePageBinding
 import com.alperen.moviebox.models.user.show.ModelShow
 import com.alperen.moviebox.utils.AlertBuilder
 import com.alperen.moviebox.utils.LoadingDialog
-import com.alperen.moviebox.viewmodels.MainPageViewModel
+import com.alperen.moviebox.viewmodels.HomePageViewModel
 
 class HomePageFragment : Fragment() {
     private lateinit var binding: FragmentHomePageBinding
-    private lateinit var viewModel: MainPageViewModel
+    private lateinit var viewModel: HomePageViewModel
     private val loadingDialog by lazy { LoadingDialog() }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,18 +27,18 @@ class HomePageFragment : Fragment() {
         binding = FragmentHomePageBinding.inflate(inflater)
         viewModel =
             ViewModelProvider(this, SavedStateViewModelFactory(activity?.application, this)).get(
-                MainPageViewModel::class.java
+                HomePageViewModel::class.java
             )
 
         with(binding) {
             viewModel.getShows()
             loadingDialog.show(activity?.supportFragmentManager!!, "loader")
+            var showList = arrayListOf<ModelShow>()
 
             viewModel.showList.observe(viewLifecycleOwner, { modelShowList ->
                 loadingDialog.dismissAllowingStateLoss()
-                mainRecycler.adapter = HomePageRecyclerAdapter(modelShowList)
-                mainRecycler.layoutManager = LinearLayoutManager(context)
 
+                showList = modelShowList
                 val genresSet = mutableSetOf<String?>()
                 modelShowList.forEach { shows ->
                     shows.genres?.forEach {
@@ -56,6 +56,11 @@ class HomePageFragment : Fragment() {
                     genresList
                 )
             })
+
+            viewModel.getUserDetails().observeForever {
+                mainRecycler.adapter = HomePageRecyclerAdapter(showList)
+                mainRecycler.layoutManager = LinearLayoutManager(context)
+            }
 
             viewModel.errorMsg.observe(viewLifecycleOwner, {
                 val title = resources.getString(R.string.alert_dialog_error)

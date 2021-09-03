@@ -11,11 +11,9 @@ import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
-import com.alperen.moviebox.R
 import com.alperen.moviebox.databinding.FragmentDetailsBinding
 import com.alperen.moviebox.models.user.show.ModelShow
 import com.alperen.moviebox.viewmodels.BaseViewModel
-import com.alperen.moviebox.viewmodels.MainPageViewModel
 import com.bumptech.glide.Glide
 
 class DetailsFragment : Fragment() {

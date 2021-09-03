@@ -32,7 +32,7 @@ object FirebaseUserUtils {
 
         auth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener {
-                val user = ModelUser(auth.uid.toString(), name, surname, email)
+                val user = ModelUser(auth.uid.toString(), name, surname, email, null)
                 dbRef
                     .collection(Constants.COLLECTION_USERS)
                     .document(auth.uid.toString())
@@ -66,6 +66,13 @@ object FirebaseUserUtils {
         val userId = FirebaseAuth.getInstance().currentUser?.uid
         val dbRef = FirebaseFirestore.getInstance()
 
+        val favoritesList = arrayListOf<Any?>()
+        getUserFavorites().observeForever { observer ->
+            observer.forEach {
+                favoritesList.add(it)
+            }
+        }
+
         dbRef.collection(Constants.COLLECTION_USERS)
             .document(userId!!)
             .get()
@@ -75,6 +82,7 @@ object FirebaseUserUtils {
                     it[Constants.NAME].toString(),
                     it[Constants.SURNAME].toString(),
                     it[Constants.EMAIL].toString(),
+                    favoritesList
                 )
                 result.value = user
             }
@@ -93,6 +101,13 @@ object FirebaseUserUtils {
         val dbRef = FirebaseFirestore.getInstance()
         val credentials = EmailAuthProvider.getCredential(user?.email!!, pass)
 
+        val favoritesList = arrayListOf<Any?>()
+        getUserFavorites().observeForever { observer ->
+            observer.forEach {
+                favoritesList.add(it)
+            }
+        }
+
         user.reauthenticate(credentials)
             .addOnSuccessListener {
                 user.updateEmail(email)
@@ -106,7 +121,8 @@ object FirebaseUserUtils {
                                             user.uid,
                                             name,
                                             surname,
-                                            email
+                                            email,
+                                            favoritesList
                                         )
                                     )
                                     .addOnSuccessListener {
@@ -138,6 +154,13 @@ object FirebaseUserUtils {
         val dbRef = FirebaseFirestore.getInstance()
         val credentials = EmailAuthProvider.getCredential(user?.email!!, pass)
 
+        val favoritesList = arrayListOf<Any?>()
+        getUserFavorites().observeForever { observer ->
+            observer.forEach {
+                favoritesList.add(it)
+            }
+        }
+
         user.reauthenticate(credentials)
             .addOnSuccessListener {
                 user.updateEmail(email)
@@ -149,7 +172,8 @@ object FirebaseUserUtils {
                                     user.uid,
                                     name,
                                     surname,
-                                    email
+                                    email,
+                                    favoritesList
                                 )
                             )
                             .addOnSuccessListener {
@@ -163,6 +187,70 @@ object FirebaseUserUtils {
             }.addOnFailureListener {
                 result.value = mapOf(Constants.FAILED to it.message.toString())
             }
+        return result
+    }
+
+    fun getUserFavorites(): MutableLiveData<ArrayList<Any>> {
+        val result = MutableLiveData<ArrayList<Any>>()
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        val dbRef = FirebaseFirestore.getInstance()
+
+        dbRef
+            .collection(Constants.COLLECTION_USERS)
+            .document(uid!!)
+            .get()
+            .addOnSuccessListener {
+                // get arraylist and remove duplicate favorites
+                val arrayList = it["favorites"] as ArrayList<*>
+                val newList = arrayListOf<Any>()
+                arrayList.forEach {
+                    if (!newList.contains(it))
+                        newList.add(it)
+                }
+                result.value = newList
+            }
+        return result
+    }
+
+    fun makeFavorite(showID: String): MutableLiveData<String> {
+        val result = MutableLiveData<String>()
+        val userID = FirebaseAuth.getInstance().currentUser?.uid
+        val dbRef = FirebaseFirestore.getInstance()
+        getUserFavorites().observeForever { observer ->
+            observer.add(showID)
+
+            dbRef
+                .collection(Constants.COLLECTION_USERS)
+                .document(userID!!)
+                .update("favorites", observer)
+                .addOnSuccessListener {
+                    result.value = Constants.SUCCESS
+                }
+                .addOnFailureListener {
+                    result.value = it.message
+                }
+        }
+        return result
+    }
+
+    fun removeFromFavorite(showID: String): MutableLiveData<String> {
+        val result = MutableLiveData<String>()
+        val userID = FirebaseAuth.getInstance().currentUser?.uid
+        val dbRef = FirebaseFirestore.getInstance()
+        getUserFavorites().observeForever { observer ->
+            observer.remove(showID)
+
+            dbRef
+                .collection(Constants.COLLECTION_USERS)
+                .document(userID!!)
+                .update("favorites", observer)
+                .addOnSuccessListener {
+                    result.value = Constants.SUCCESS
+                }
+                .addOnFailureListener {
+                    result.value = it.message
+                }
+        }
         return result
     }
 }

@@ -11,6 +11,7 @@ class Constants {
         const val NAME = "name"
         const val SURNAME = "surname"
         const val EMAIL = "email"
+        const val FAVORITES = "favorites"
 
         // process constants
         const val PROCESSING = "Processing"
