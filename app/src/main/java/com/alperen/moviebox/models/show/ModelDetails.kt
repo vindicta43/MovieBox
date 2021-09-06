@@ -5,6 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class ModelDetails(
+    val id: String?,
     val name: String?,
     val summary: String?,
     val rating: String?,

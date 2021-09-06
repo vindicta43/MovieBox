@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import android.widget.TextView
 import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,8 +18,9 @@ import com.alperen.moviebox.databinding.FragmentHomePageBinding
 import com.alperen.moviebox.models.user.show.ModelShow
 import com.alperen.moviebox.utils.AlertBuilder
 import com.alperen.moviebox.utils.LoadingDialog
-import com.alperen.moviebox.utils.ToastBuilder
 import com.alperen.moviebox.viewmodels.HomePageViewModel
+import java.util.*
+import kotlin.collections.ArrayList
 
 class HomePageFragment : Fragment() {
     private lateinit var binding: FragmentHomePageBinding
@@ -35,30 +35,10 @@ class HomePageFragment : Fragment() {
             ViewModelProvider(this, SavedStateViewModelFactory(activity?.application, this)).get(
                 HomePageViewModel::class.java
             )
+        var showsList = arrayListOf<ModelShow>()
 
         with(binding) {
-            viewModel.getShows()
-            loadingDialog.show(activity?.supportFragmentManager!!, "loader")
-            var showList = arrayListOf<ModelShow>()
-
-            viewModel.showList.observe(viewLifecycleOwner, { modelShowList ->
-                loadingDialog.dismissAllowingStateLoss()
-                showList = modelShowList
-                fillSpinner(showList, spnGenres)
-            })
-
-            viewModel.getUserDetails().observeForever {
-                mainRecycler.adapter = HomePageRecyclerAdapter(showList)
-                mainRecycler.layoutManager = LinearLayoutManager(context)
-            }
-
-            viewModel.errorMsg.observe(viewLifecycleOwner, {
-                val title = resources.getString(R.string.alert_dialog_error)
-                AlertBuilder(context).build(title, it.toString())
-                loadingDialog.dismissAllowingStateLoss()
-            })
-
-            etSearch.addTextChangedListener(object : TextWatcher{
+            etSearch.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 }
 
@@ -67,12 +47,12 @@ class HomePageFragment : Fragment() {
 
                 override fun afterTextChanged(p0: Editable?) {
                     if (p0.isNullOrEmpty()) {
-                        viewModel.getShows()
+                        spnGenres.setSelection(0)
                     } else {
                         viewModel.searchShows(p0.toString())
                         viewModel.showList.observe(viewLifecycleOwner, {
                             viewModel.getUserDetails().observeForever {
-                                mainRecycler.adapter = HomePageRecyclerAdapter(showList)
+                                mainRecycler.adapter = HomePageRecyclerAdapter(showsList)
                                 mainRecycler.layoutManager = LinearLayoutManager(context)
                             }
                         })
@@ -82,8 +62,50 @@ class HomePageFragment : Fragment() {
 
             spnGenres.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-//                    val textView = spnGenres.selectedView as TextView
-//                    val result = textView.text.toString()
+                    when (p2) {
+                        0 -> {
+                            loadingDialog.show(activity?.supportFragmentManager!!, "loader")
+                            viewModel.getShows()
+                            viewModel.showList.observe(viewLifecycleOwner, { observeShowsList ->
+                                showsList = observeShowsList
+                            })
+
+                            viewModel.getUserDetails().observe(viewLifecycleOwner, {
+                                mainRecycler.adapter = HomePageRecyclerAdapter(showsList)
+                                mainRecycler.layoutManager = LinearLayoutManager(context)
+                                loadingDialog.dismissAllowingStateLoss()
+                                notifyChange()
+                            })
+                        }
+                        1 -> {
+                            loadingDialog.show(activity?.supportFragmentManager!!, "loader")
+                            viewModel.getShowsAsc()
+                            viewModel.showList.observe(viewLifecycleOwner, { observeShowsList ->
+                                showsList = observeShowsList
+                            })
+
+                            viewModel.getUserDetails().observe(viewLifecycleOwner, {
+                                mainRecycler.adapter = HomePageRecyclerAdapter(showsList)
+                                mainRecycler.layoutManager = LinearLayoutManager(context)
+                                loadingDialog.dismissAllowingStateLoss()
+                                notifyChange()
+                            })
+                        }
+                        2 -> {
+                            loadingDialog.show(activity?.supportFragmentManager!!, "loader")
+                            viewModel.getShowsDesc()
+                            viewModel.showList.observe(viewLifecycleOwner, { observeShowsList ->
+                                showsList = observeShowsList
+                            })
+
+                            viewModel.getUserDetails().observe(viewLifecycleOwner, {
+                                mainRecycler.adapter = HomePageRecyclerAdapter(showsList)
+                                mainRecycler.layoutManager = LinearLayoutManager(context)
+                                loadingDialog.dismissAllowingStateLoss()
+                                notifyChange()
+                            })
+                        }
+                    }
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -94,24 +116,10 @@ class HomePageFragment : Fragment() {
         }
     }
 
-    private fun fillSpinner(showList: ArrayList<ModelShow>, spnGenres: Spinner) {
-        val genresSet = mutableSetOf<String?>()
-        val all = resources.getString(R.string.home_page_spinner_first)
-        genresSet.add(all)
-        showList.forEach { shows ->
-            shows.genres?.forEach {
-                genresSet.add(it)
-            }
-        }
-        val genresList = arrayListOf<String?>()
-        genresSet.forEach {
-            genresList.add(it)
-        }
+    override fun onSaveInstanceState(outState: Bundle) {
+        if (::viewModel.isInitialized)
+            viewModel.saveState()
 
-        spnGenres.adapter = ArrayAdapter(
-            requireContext(),
-            R.layout.support_simple_spinner_dropdown_item,
-            genresList
-        )
+        super.onSaveInstanceState(outState)
     }
 }

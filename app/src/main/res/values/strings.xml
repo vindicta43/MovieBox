@@ -37,7 +37,14 @@
 
     <!--  Home   -->
     <string name="home_page_search">Ara</string>
-    <string name="home_page_spinner_first">Tüm türler</string>
+    <string-array name="spinner_items">
+        <item>Tümü</item>
+        <item>Düşükten yükseğe</item>
+        <item>Yüksekten düşüğe</item>
+    </string-array>
+
+    <!--  Details  -->
+    <string name="details_share">Paylaş</string>
 
     <!-- Alert dialog strings -->
     <string name="alert_dialog_warn">Uyarı</string>

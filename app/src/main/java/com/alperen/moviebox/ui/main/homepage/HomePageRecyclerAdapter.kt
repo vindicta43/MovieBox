@@ -70,6 +70,7 @@ class HomePageRecyclerAdapter(
         holder.itemView.setOnClickListener {
             val action = HomePageFragmentDirections.actionMainPageFragmentToDetailsFragment(
                 ModelDetails(
+                    showsList[position].id.toString(),
                     showsList[position].name,
                     showsList[position].summary,
                     showsList[position].rating?.average.toString(),

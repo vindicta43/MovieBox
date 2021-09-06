@@ -145,4 +145,11 @@ class ProfilePageFragment : Fragment() {
         editor?.putBoolean("isAppStarted", true)
         editor?.apply()
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        if (::viewModel.isInitialized)
+            viewModel.saveState()
+
+        super.onSaveInstanceState(outState)
+    }
 }

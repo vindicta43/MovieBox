@@ -111,4 +111,11 @@ class LoginFragment : Fragment() {
             AlertBuilder(context).build(title, result[Constants.FAILED])
         }
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        if (::viewModel.isInitialized)
+            viewModel.saveState()
+
+        super.onSaveInstanceState(outState)
+    }
 }

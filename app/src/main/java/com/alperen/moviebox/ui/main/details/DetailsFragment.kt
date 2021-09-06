@@ -11,6 +11,7 @@ import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import com.alperen.moviebox.R
 import com.alperen.moviebox.databinding.FragmentDetailsBinding
 import com.alperen.moviebox.models.user.show.ModelShow
 import com.alperen.moviebox.viewmodels.BaseViewModel
@@ -36,15 +37,31 @@ class DetailsFragment : Fragment() {
             progress.centerRadius = 16f
             progress.start()
 
+            // parse html format summary text
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 tvContent.text = Html.fromHtml(args.show.summary, Html.FROM_HTML_MODE_COMPACT)
             } else {
                 tvContent.text = args.show.summary
             }
+
             toolbar.title = args.show.name
             Glide.with(requireContext()).load(args.show.image).placeholder(progress).into(ivImageBig)
 
+            viewModel.getUserDetails().observe(viewLifecycleOwner, {
+                if (it.favorites?.contains(args.show.id) == true)
+                    fabFavorite.setImageResource(R.drawable.ic_favorite)
+                else
+                    fabFavorite.setImageResource(R.drawable.ic_favorite_border)
+            })
+
             return root
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        if (::viewModel.isInitialized)
+            viewModel.saveState()
+
+        super.onSaveInstanceState(outState)
     }
 }
