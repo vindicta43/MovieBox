@@ -37,6 +37,7 @@
 
     <!--  Home   -->
     <string name="home_page_search">Ara</string>
+    <string name="home_page_spinner_first">Tüm türler</string>
 
     <!-- Alert dialog strings -->
     <string name="alert_dialog_warn">Uyarı</string>
